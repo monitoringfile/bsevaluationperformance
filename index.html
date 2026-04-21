@@ -83,12 +83,27 @@
             border-left: 4px solid var(--accent);
         }
 
+        .section-meta {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
         .section-score-pill { 
             background: rgba(255,255,255,0.1); 
             padding: 4px 15px; 
             border-radius: 20px; 
             font-size: 0.85rem; 
             border: 1px solid rgba(255,255,255,0.2); 
+            font-weight: 800;
+        }
+
+        .section-standing {
+            font-size: 0.75rem;
+            font-weight: 900; 
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 4px;
         }
 
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
@@ -131,7 +146,7 @@
         .grand-total-card { 
             margin-top: 20px; 
             background: #1e2124; 
-            border: 1px solid var(--accent);
+            border: 2px solid var(--accent);
             color: white; 
             padding: 30px; 
             border-radius: 10px; 
@@ -140,8 +155,8 @@
             text-align: center; 
             gap: 20px; 
         }
-        .grand-total-card label { font-size: 0.7rem; text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 10px; }
-        .grand-total-card span { font-size: 1.8rem; display: block; font-weight: 700; }
+        .grand-total-card label { font-size: 0.75rem; text-transform: uppercase; color: var(--text-main); display: block; margin-bottom: 10px; font-weight: 800; }
+        .grand-total-card span { font-size: 2rem; display: block; font-weight: 900; }
         
         .ai-box { 
             background: rgba(52, 152, 219, 0.05); 
@@ -168,7 +183,6 @@
             font-size: 0.85rem;
         }
 
-        /* NEW PROFESSIONAL AI DISPLAY STYLING */
         #ai-output {
             margin-top: 15px;
             font-size: 0.95rem;
@@ -176,14 +190,21 @@
             white-space: pre-wrap;
             line-height: 1.6;
         }
+
         .ai-result-card {
             background: rgba(0, 0, 0, 0.2);
             border-left: 4px solid var(--accent);
-            padding: 20px;
+            padding: 25px;
             border-radius: 4px 8px 8px 4px;
             color: #e1e1e1;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
         }
+
+        /* Analysis Highlights */
+        .highlight-st { color: #2ecc71; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px; }
+        .highlight-im { color: #f39c12; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px; margin-top: 15px; }
+        .highlight-pl { color: #3498db; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 5px; margin-top: 15px; }
         
         .btn-ai { 
             background: var(--accent); 
@@ -214,7 +235,7 @@
             margin-bottom: 8px;
             padding: 5px;
             min-height: 25px;
-            font-weight: bold;
+            font-weight: 900; 
             color: var(--accent);
         }
         .sig-label {
@@ -223,7 +244,15 @@
             text-transform: uppercase;
             display: block;
         }
-        .sig-date { margin-top: 15px; font-size: 0.85rem; }
+        .sig-date { margin-top: 15px; font-size: 0.85rem; font-weight: 700; }
+
+        @media print {
+            .form-card { box-shadow: none; border: 1px solid #000; }
+            .btn-ai, .api-config { display: none; }
+            body { background: white; color: black; padding: 0; }
+            .grand-total-card { border-color: black; color: black; }
+            .highlight-st, .highlight-im, .highlight-pl { color: black !important; text-decoration: underline; }
+        }
 
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--primary-bg); }
@@ -261,81 +290,89 @@
         </div>
     </div>
 
-    <h2>Section 1: Operational Efficiency & Responsibility <span class="section-score-pill" id="pill-sec1">0 / 20</span></h2>
+    <h2>
+        Section 1: Operational Efficiency & Responsibility 
+        <div class="section-meta">
+            <span class="section-standing" id="stand-sec1">Poor</span>
+            <span class="section-score-pill" id="pill-sec1">0 / 20 (0%)</span>
+        </div>
+    </h2>
     <table>
         <thead><tr><th>Performance Indicator</th><th style="width:80px">Rating</th><th>Comments</th></tr></thead>
         <tbody>
             <tr>
-                <td><span class="indicator-text">Portfolio Management:</span><span class="indicator-desc">Ensures all loan folders and documentation are processed within the standard turnaround time (e.g., 3 days released).</span>
-                <span class="indicator-desc">(Mosiguro nga ang tanang loan folder ug mga dokumento maproseso sulod sa standard turnaround time (e.g., 3 days released).)</span></td>
+                <td><span class="indicator-text">Portfolio Management:</span><span class="indicator-desc">Ensures all loan folders and documentation are processed within the standard turnaround time.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec1" oninput="calculateScores()"></td>
                 <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Workflow Discipline:</span><span class="indicator-desc">Adheres to and enforces morning routines and operational deadlines (e.g., 7:30 Am Call Time).</span>
-                <span class="indicator-desc">(Mosunod ug mopatuman sa mga rutina sa buntag ug mga deadline sa operasyon (e.g., 7:30 Am Call Time).)</span></td>
+                <td><span class="indicator-text">Workflow Discipline:</span><span class="indicator-desc">Adheres to and enforces morning routines and operational deadlines.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec1" oninput="calculateScores()"></td>
                 <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Data Integrity:</span><span class="indicator-desc">Maintains accurate and timely updates in tracking tools and MIS reports; ensures captured folders statuses are correctly logged.</span>
-                <span class="indicator-desc">(Nagmintinar sa tukma ug tukma sa panahon nga mga update sa mga himan sa pagsubay ug mga report sa MIS; nagsiguro nga ang mga status sa nakuha nga mga folder husto nga naka-log.)</span></td>
+                <td><span class="indicator-text">Data Integrity:</span><span class="indicator-desc">Maintains accurate and timely updates in tracking tools and MIS reports.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec1" oninput="calculateScores()"></td>
                 <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Resource Management:</span><span class="indicator-desc">Effectively manages branch assets / cleanliness, including vehicle maintenance, office supplies, PCF, ECF, CBA, COH and EOD.</span>
-                <span class="indicator-desc">(Epektibong nagdumala sa mga kabtangan/kalimpyo sa branch, lakip ang pagmentinar sa sakyanan, mga gamit sa opisina, PCF, ECF, CBA, COH ug EOD.)</span></td>
+                <td><span class="indicator-text">Resource Management:</span><span class="indicator-desc">Effectively manages branch assets, vehicle maintenance, and office supplies.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec1" oninput="calculateScores()"></td>
                 <td><textarea class="comment-input"></textarea></td>
             </tr>
         </tbody>
     </table>
 
-    <h2>Section 2: Leadership & Team Management <span class="section-score-pill" id="pill-sec2">0 / 15</span></h2>
+    <h2>
+        Section 2: Leadership & Team Management 
+        <div class="section-meta">
+            <span class="section-standing" id="stand-sec2">Poor</span>
+            <span class="section-score-pill" id="pill-sec2">0 / 15 (0%)</span>
+        </div>
+    </h2>
     <table>
         <thead><tr><th>Performance Indicator</th><th style="width:80px">Rating</th><th>Comments</th></tr></thead>
         <tbody>
             <tr>
-                <td><span class="indicator-text">Staff Mentorship:</span><span class="indicator-desc">Provides clear direction and motivation to staff, fostering a professional and productive environment.</span>
-                <span class="indicator-desc">(Naghatag og klaro nga direksyon ug motibasyon sa mga kawani, nga nagpalambo sa usa ka propesyonal ug mabungahon nga palibot.)</span></td>
+                <td><span class="indicator-text">Staff Mentorship:</span><span class="indicator-desc">Provides clear direction and motivation to staff.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec2" oninput="calculateScores()"></td>
                 <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Conflict Resolution:</span><span class="indicator-desc">Handles internal and external disputes with professionalism and follows organizational protocols.</span>
-                <span class="indicator-desc">(Modumala sa internal ug eksternal nga mga lantugi uban ang propesyonalismo ug mosunod sa mga protocol sa organisasyon.)</span></td>
+                <td><span class="indicator-text">Conflict Resolution:</span><span class="indicator-desc">Handles disputes with professionalism.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec2" oninput="calculateScores()"></td>
                 <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Performance Tracking:</span><span class="indicator-desc">Regularly monitors individual staff KPIs (e.g., Defaults, Reloans, and New Accounts) and provides coaching where needed.</span>
-                <span class="indicator-desc">(Regular nga nagmonitor sa mga KPI sa indibidwal nga kawani (pananglitan, Mga Default, Mga Reloan, ug Bag-ong mga Account) ug naghatag og coaching kung gikinahanglan.)</span></td>
+                <td><span class="indicator-text">Performance Tracking:</span><span class="indicator-desc">Monitors staff KPIs and provides coaching.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec2" oninput="calculateScores()"></td>
                 <td><textarea class="comment-input"></textarea></td>
             </tr>
         </tbody>
     </table>
 
-    <h2>Section 3: Strategic Goals & Growth <span class="section-score-pill" id="pill-sec3">0 / 15</span></h2>
+    <h2>
+        Section 3: Strategic Goals & Growth 
+        <div class="section-meta">
+            <span class="section-standing" id="stand-sec3">Poor</span>
+            <span class="section-score-pill" id="pill-sec3">0 / 15 (0%)</span>
+        </div>
+    </h2>
     <table>
         <thead><tr><th>Performance Indicator</th><th style="width:80px">Rating</th><th>Comments</th></tr></thead>
         <tbody>
             <tr>
-                <td><span class="indicator-text">Growth Targets:</span><span class="indicator-desc">Meets or exceeds monthly targets for new client acquisition and loan releases.</span>
-                <span class="indicator-desc">(Nakab-ot o milapas sa binulan nga target alang sa pagkuha og bag-ong kliyente ug reloaner.)</span></td>
+                <td><span class="indicator-text">Growth Targets:</span><span class="indicator-desc">Meets or exceeds monthly targets for acquisition.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec3" oninput="calculateScores()"></td>
                 <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Collections Performance:</span><span class="indicator-desc">Demonstrates effective strategies for reducing defaults and managing reloan prospects.</span>
-                <span class="indicator-desc">(Nagpakita og epektibo nga mga estratehiya alang sa pagpakunhod sa mga default ug pagdumala sa mga posibilidad sa pag-reloan.)</span></td>
+                <td><span class="indicator-text">Collections Performance:</span><span class="indicator-desc">Effective strategies for reducing defaults.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec3" oninput="calculateScores()"></td>
                 <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Innovation:</span><span class="indicator-desc">Suggests or implements improvements to branch processes or automation to increase efficiency.</span>
-                <span class="indicator-desc">(Mosugyot o mopatuman og mga pagpaayo sa mga proseso sa sanga o automation aron madugangan ang kaepektibo.)</span></td>
+                <td><span class="indicator-text">Innovation:</span><span class="indicator-desc">Suggests improvements to branch processes.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec3" oninput="calculateScores()"></td>
                 <td><textarea class="comment-input"></textarea></td>
             </tr>
@@ -356,15 +393,13 @@
     </div>
 
     <div class="ai-box">
-        <h3>Over all Comments</h3>
-        
+        <h3>Performance Summary</h3>
         <div class="api-config">
             <label>Paste New API Key</label>
             <input type="password" id="customApiKey" placeholder="Paste your new API key here...">
         </div>
-
-        <button class="btn-ai" onclick="runAISummary()">Result Analysis</button>
-        <div id="ai-output">Awaiting data for analysis...</div>
+        <button class="btn-ai" onclick="runAISummary()">Generate Result Summary</button>
+        <div id="ai-output">Awaiting data for summary...</div>
     </div>
 
     <div class="signature-section">
@@ -393,6 +428,23 @@
         document.getElementById('sig-evalDate2').innerText = "Date: " + (date || "---");
     }
 
+    function getStanding(percent) {
+        if (percent >= 90) return { text: "Excellent", color: "#27ae60" };
+        if (percent >= 75) return { text: "Good", color: "#2ecc71" };
+        if (percent >= 50) return { text: "Needs Improvement", color: "#f39c12" };
+        return { text: "Poor", color: "#e74c3c" };
+    }
+
+    function updateSectionUI(id, score, max) {
+        const percent = ((score / max) * 100).toFixed(1);
+        const standing = getStanding(percent);
+        
+        document.getElementById(`pill-sec${id}`).innerText = `${score} / ${max} (${percent}%)`;
+        const standLabel = document.getElementById(`stand-sec${id}`);
+        standLabel.innerText = standing.text;
+        standLabel.style.color = standing.color;
+    }
+
     function calculateScores() {
         const allInputs = document.querySelectorAll('.score');
         allInputs.forEach(input => {
@@ -405,22 +457,21 @@
         const s2 = Array.from(document.querySelectorAll('.sec2')).reduce((acc, i) => acc + parseInt(i.value || 0), 0);
         const s3 = Array.from(document.querySelectorAll('.sec3')).reduce((acc, i) => acc + parseInt(i.value || 0), 0);
 
-        document.getElementById('pill-sec1').innerText = `${s1} / 20`;
-        document.getElementById('pill-sec2').innerText = `${s2} / 15`;
-        document.getElementById('pill-sec3').innerText = `${s3} / 15`;
+        updateSectionUI(1, s1, 20);
+        updateSectionUI(2, s2, 15);
+        updateSectionUI(3, s3, 15);
 
         const total = s1 + s2 + s3;
         const max = 50;
-        const percent = ((total / max) * 100).toFixed(1);
+        const totalPercent = ((total / max) * 100).toFixed(1);
         
         document.getElementById('grandTotal').innerText = `${total} / ${max}`;
-        document.getElementById('percentage').innerText = `${percent}%`;
+        document.getElementById('percentage').innerText = `${totalPercent}%`;
 
-        const standing = document.getElementById('standing-text');
-        if (percent >= 90) { standing.innerText = "Excellent"; standing.style.color = "#27ae60"; }
-        else if (percent >= 75) { standing.innerText = "Good"; standing.style.color = "#2ecc71"; }
-        else if (percent >= 50) { standing.innerText = "Needs Improvement"; standing.style.color = "#f39c12"; }
-        else { standing.innerText = "Poor"; standing.style.color = "#e74c3c"; }
+        const overallStanding = getStanding(totalPercent);
+        const standingText = document.getElementById('standing-text');
+        standingText.innerText = overallStanding.text;
+        standingText.style.color = overallStanding.color;
     }
 
     window.onload = function() {
@@ -430,24 +481,26 @@
 
     async function runAISummary() {
         const customKey = document.getElementById('customApiKey').value.trim();
-        const defaultKey = "BSEVALUATION"; 
-        const apiKey = customKey || defaultKey;
+        const apiKey = customKey || "YOUR_DEFAULT_API_KEY";
 
         const output = document.getElementById('ai-output');
         const name = document.getElementById('empName').value || "the employee";
-        const evalDate = document.getElementById('dateEvaluated').value || "unspecified date";
         const totalScore = document.getElementById('grandTotal').innerText;
         const status = document.getElementById('standing-text').innerText;
+        const s1 = document.getElementById('pill-sec1').innerText;
+        const s2 = document.getElementById('pill-sec2').innerText;
+        const s3 = document.getElementById('pill-sec3').innerText;
 
         const feedback = Array.from(document.querySelectorAll('.comment-input'))
                               .map(t => t.value.trim())
                               .filter(v => v !== "")
                               .join("; ");
 
-        output.innerHTML = "<em>Analyzing Results...</em>";
+        output.innerHTML = "<em>Analyzing performance metrics...</em>";
 
         try {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            const modelId = "gemini-3.1-flash-lite-preview";
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelId}:generateContent?key=${apiKey}`;
             
             const response = await fetch(url, {
                 method: 'POST',
@@ -455,14 +508,21 @@
                 body: JSON.stringify({
                     contents: [{ 
                         parts: [{ 
-                            text: `Briefly summarize the performance of ${name} evaluated on ${evalDate}. 
-                            Score: ${totalScore} (${status}). 
-                            Notes: ${feedback || "No notes provided."}. 
+                            text: `Act as a professional supervisor. Provide a result analysis for ${name} based on these scores:
+                            Overall: ${totalScore} (${status}), Section 1: ${s1}, Section 2: ${s2}, Section 3: ${s3}.
+                            Evaluator Notes: ${feedback || "None"}.
                             
-                            Output format:
-                            - STRENGTHS: (Bullet points)
-                            - AREAS TO IMPROVE: (Bullet points)
-                            - ACTION STEP: (One clear recommendation)` 
+                            Format the response strictly with these headers and bullet points. 
+                            IMPORTANT: Do NOT use asterisks (**) for bolding. Use plain text headers exactly like this:
+                            
+                            STRENGTHS:
+                            • [Bullet]
+                            
+                            AREA FOR IMPROVEMENT:
+                            • [Bullet]
+                            
+                            ACTION PLAN:
+                            • [Bullet]` 
                         }] 
                     }]
                 })
@@ -471,16 +531,27 @@
             const result = await response.json();
             
             if (result.error) {
-                output.innerText = "API Error: " + result.error.message;
+                output.innerHTML = `<div style="color:#e74c3c"><strong>Error:</strong> ${result.error.message}</div>`;
             } else if (result.candidates && result.candidates.length > 0) {
-                // Wrap response in the professional card class
-                const content = result.candidates[0].content.parts[0].text;
-                output.innerHTML = `<div class="ai-result-card">${content}</div>`;
+                let content = result.candidates[0].content.parts[0].text;
+                
+                // Clean markdown asterisks if AI included them despite instructions
+                content = content.replace(/\*\*/g, '');
+                
+                // Inject custom highlighting classes for a professional look
+                content = content.replace(/STRENGTHS:/g, '<span class="highlight-st">STRENGTHS:</span>');
+                content = content.replace(/AREA FOR IMPROVEMENT:/g, '<span class="highlight-im">AREA FOR IMPROVEMENT:</span>');
+                content = content.replace(/ACTION PLAN:/g, '<span class="highlight-pl">ACTION PLAN:</span>');
+                
+                // Convert remaining newlines and bullets
+                const formattedContent = content.replace(/\n/g, '<br>').replace(/\* /g, '• ');
+                
+                output.innerHTML = `<div class="ai-result-card">${formattedContent}</div>`;
             } else {
-                output.innerText = "Analysis failed. Please check your API key.";
+                output.innerText = "Error: Result could not be generated.";
             }
         } catch (err) {
-            output.innerText = "Connection Error: Check your internet or API key status.";
+            output.innerText = "Connection failed. Please check your API key.";
         }
     }
 </script>
