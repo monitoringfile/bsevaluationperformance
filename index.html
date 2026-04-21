@@ -4,62 +4,213 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supervisor Evaluation Portal</title>
+    
+    <link rel="icon" href="https://img.icons8.com/fluency/48/checked-user-male.png" type="image/png">
+
     <style>
         :root { 
-            --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; 
-            --excellent: #27ae60; --good: #2ecc71; --ni: #f39c12; --poor: #c0392b;
+            --primary-bg: #1a1c1e;
+            --card-bg: #24272b;
+            --input-bg: #2d3238;
+            --text-main: #e1e1e1;
+            --text-dim: #a0a0a0;
+            --accent: #3498db;
+            --border: #3f444c;
+            --excellent: #27ae60; --good: #2ecc71; --ni: #f39c12; --poor: #e74c3c;
         }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); padding: 20px; color: #333; }
-        .form-card { max-width: 1000px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        
-        /* Official Header Style */
-        .info-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; padding: 20px; background: #fcfcfc; border: 1px solid #eee; border-radius: 8px; }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--primary-bg); 
+            padding: 20px; 
+            color: var(--text-main); 
+        }
+
+        .form-card { 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            background: var(--card-bg); 
+            padding: 40px; 
+            border-radius: 12px; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); 
+            border: 1px solid var(--border);
+        }
+
+        h1 { margin: 0 0 25px 0; color: #fff; font-weight: 300; letter-spacing: 1px; }
+
+        /* Header Info Section */
+        .info-section { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 20px; 
+            margin-bottom: 30px; 
+            padding: 25px; 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid var(--border); 
+            border-radius: 8px; 
+        }
+
         .info-group { display: flex; flex-direction: column; }
-        .info-group label { font-weight: 700; font-size: 0.85rem; margin-bottom: 5px; color: var(--primary); text-transform: uppercase; }
-        .info-group input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .info-group label { 
+            font-weight: 700; 
+            font-size: 0.75rem; 
+            margin-bottom: 8px; 
+            color: var(--accent); 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+        }
+
+        .info-group input { 
+            padding: 12px; 
+            background: var(--input-bg);
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            color: white;
+            font-family: inherit;
+        }
+
+        /* Date Selection Grid */
+        .date-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+        /* Section Headers */
+        h2 { 
+            font-size: 1rem; 
+            background: #2c3e50; 
+            color: #fff; 
+            padding: 14px 20px; 
+            border-radius: 6px; 
+            margin-top: 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-left: 4px solid var(--accent);
+        }
+
+        .section-score-pill { 
+            background: rgba(255,255,255,0.1); 
+            padding: 4px 15px; 
+            border-radius: 20px; 
+            font-size: 0.85rem; 
+            border: 1px solid rgba(255,255,255,0.2); 
+        }
+
+        /* Table Styling */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { text-align: left; padding: 12px; background: rgba(0,0,0,0.2); font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; }
+        td { padding: 15px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        
+        .indicator-text { font-weight: 600; display: block; color: #fff; margin-bottom: 4px; }
+        .indicator-desc { font-size: 0.8rem; color: var(--text-dim); display: block; line-height: 1.4; }
+        
+        input[type="number"] { 
+            width: 60px; 
+            padding: 10px; 
+            background: var(--input-bg);
+            border: 2px solid var(--border); 
+            border-radius: 6px; 
+            text-align: center; 
+            font-weight: bold; 
+            color: var(--accent);
+        }
+
+        textarea { 
+            width: 95%; 
+            height: 60px; 
+            background: var(--input-bg);
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            padding: 10px; 
+            color: #fff;
+            font-family: inherit; 
+            resize: vertical; 
+        }
 
         /* Performance Legend */
-        .legend-bar { display: flex; gap: 10px; margin-bottom: 30px; justify-content: space-between; }
-        .legend-item { padding: 12px 15px; border-radius: 6px; font-size: 0.9rem; color: white; font-weight: bold; flex: 1; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .legend-bar { display: flex; gap: 10px; margin-top: 40px; }
+        .legend-item { padding: 10px; border-radius: 4px; font-size: 0.75rem; color: white; font-weight: bold; flex: 1; text-align: center; }
         .l-exc { background: var(--excellent); }
         .l-good { background: var(--good); }
         .l-ni { background: var(--ni); }
         .l-poor { background: var(--poor); }
 
-        h2 { font-size: 1.1rem; background: var(--primary); color: white; padding: 12px; border-radius: 6px; margin-top: 30px; display: flex; justify-content: space-between; align-items: center; }
-        .section-score-pill { background: rgba(255,255,255,0.2); padding: 2px 12px; border-radius: 20px; font-size: 0.9rem; border: 1px solid white; }
-
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { text-align: left; padding: 10px; background: #f8f9fa; font-size: 0.85rem; border-bottom: 2px solid #dee2e6; }
-        td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: top; }
-        .indicator-text { font-weight: 700; display: block; color: var(--primary); }
-        .indicator-desc { font-size: 0.8rem; color: #666; display: block; }
-        
-        input[type="number"] { width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 6px; text-align: center; font-weight: bold; }
-        textarea { width: 95%; height: 50px; border: 1px solid #ccc; border-radius: 4px; padding: 8px; font-family: inherit; resize: vertical; }
-
         /* Grand Total Section */
-        .grand-total-card { margin-top: 20px; background: var(--primary); color: white; padding: 25px; border-radius: 8px; display: grid; grid-template-columns: 1fr 1fr 1fr; text-align: center; gap: 20px; }
-        .grand-total-card span { font-size: 1.6rem; display: block; font-weight: bold; margin-top: 5px; }
+        .grand-total-card { 
+            margin-top: 20px; 
+            background: #1e2124; 
+            border: 1px solid var(--accent);
+            color: white; 
+            padding: 30px; 
+            border-radius: 10px; 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            text-align: center; 
+            gap: 20px; 
+        }
+        .grand-total-card label { font-size: 0.7rem; text-transform: uppercase; color: var(--text-dim); display: block; margin-bottom: 10px; }
+        .grand-total-card span { font-size: 1.8rem; display: block; font-weight: 700; }
         
-        .ai-box { background: #e8f4fd; border: 1px solid #b3d7f2; padding: 20px; border-radius: 10px; margin-top: 30px; }
-        .btn-ai { background: var(--accent); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; transition: 0.3s; }
+        .ai-box { 
+            background: rgba(52, 152, 219, 0.05); 
+            border: 1px dashed var(--accent); 
+            padding: 25px; 
+            border-radius: 10px; 
+            margin-top: 40px; 
+        }
+        .ai-box h3 { margin-top: 0; color: var(--accent); font-size: 1.1rem; }
+        
+        .btn-ai { 
+            background: var(--accent); 
+            color: white; 
+            border: none; 
+            padding: 15px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            width: 100%; 
+            transition: background 0.3s; 
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-ai:hover { background: #2980b9; }
+
+        /* Custom scrollbar for dark mode */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--primary-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <div class="form-card">
-    <h1 style="margin: 0 0 20px 0; color: var(--primary);">Performance Evaluation Form</h1>
+    <h1>Supervisor Evaluation Portal</h1>
 
     <div class="info-section">
-        <div class="info-group"><label>Employee Name:</label><input type="text" id="empName"></div>
-        <div class="info-group"><label>Branch Name:</label><input type="text" id="branchName"></div>
-        <div class="info-group"><label>Review Period:</label><input type="text" id="evalPeriod"></div>
-        <div class="info-group"><label>Evaluator Name:</label><input type="text" id="evaluatorName"></div>
+        <div class="info-group">
+            <label>Employee Name</label>
+            <input type="text" id="empName" placeholder="Full Name">
+        </div>
+        <div class="info-group">
+            <label>Date Evaluated</label>
+            <input type="date" id="dateEvaluated">
+        </div>
+        <div class="info-group">
+            <label>Branch Name</label>
+            <input type="text" id="branchName" placeholder="e.g. Main Branch">
+        </div>
+        <div class="info-group">
+            <label>Week Covered</label>
+            <div class="date-grid">
+                <input type="date" id="weekStart" title="Week Start">
+                <input type="date" id="weekEnd" title="Week End">
+            </div>
+        </div>
+        <div class="info-group">
+            <label>Evaluator Name</label>
+            <input type="text" id="evaluatorName">
+        </div>
     </div>
 
     <h2>Section 1: Operational Efficiency & Responsibility <span class="section-score-pill" id="pill-sec1">0 / 20</span></h2>
-    <p style="font-size: 0.85rem; font-style: italic; margin-bottom: 10px;">Rate on a scale of 1-5 (1 = Needs Improvement, 5 = Exceptional)</p>
     <table>
         <thead><tr><th>Performance Indicator</th><th style="width:80px">Rating</th><th>Comments</th></tr></thead>
         <tbody>
@@ -130,7 +281,7 @@
         </tbody>
     </table>
 
-    <div class="legend-bar" style="margin-top: 40px; margin-bottom: 10px;">
+    <div class="legend-bar">
         <div class="legend-item l-exc">Excellent: 90% - 100%</div>
         <div class="legend-item l-good">Good: 75% - 89%</div>
         <div class="legend-item l-ni">Needs Improvement: 50% - 74%</div>
@@ -138,15 +289,15 @@
     </div>
 
     <div class="grand-total-card">
-        <div>TOTAL SCORE<span id="grandTotal">10 / 50</span></div>
-        <div>PERCENTAGE<span id="percentage">20.0%</span></div>
-        <div>PERFORMANCE STANDING<span id="standing-text">Poor</span></div>
+        <div><label>Total Score</label><span id="grandTotal">10 / 50</span></div>
+        <div><label>Percentage</label><span id="percentage">20.0%</span></div>
+        <div><label>Performance Standing</label><span id="standing-text">Poor</span></div>
     </div>
 
     <div class="ai-box">
         <h3>AI Executive Summary</h3>
         <button class="btn-ai" onclick="runAISummary()">Generate AI Insights</button>
-        <div id="ai-output" style="margin-top:15px; font-style: italic; font-size: 0.95rem; color: #555;">Awaiting data for analysis...</div>
+        <div id="ai-output" style="margin-top:15px; font-style: italic; font-size: 0.95rem; color: var(--text-dim);">Awaiting data for analysis...</div>
     </div>
 </div>
 
@@ -187,6 +338,7 @@
         const apiKey = "AIzaSyAB53oOLC6Rn_4Gid2Ub6xLc8_p1H4ATWc";
         const output = document.getElementById('ai-output');
         const name = document.getElementById('empName').value || "the employee";
+        const evalDate = document.getElementById('dateEvaluated').value || "unspecified date";
         const totalScore = document.getElementById('grandTotal').innerText;
         const status = document.getElementById('standing-text').innerText;
 
@@ -197,7 +349,7 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    contents: [{ parts: [{ text: `Summarize the performance of ${name}. Overall Score: ${totalScore}. Standing: ${status}. Focus on operational discipline, leadership ability, and growth impact.` }] }]
+                    contents: [{ parts: [{ text: `Summarize the performance of ${name} evaluated on ${evalDate}. Overall Score: ${totalScore}. Standing: ${status}. Focus on operational discipline, leadership ability, and growth impact.` }] }]
                 })
             });
             const result = await response.json();
