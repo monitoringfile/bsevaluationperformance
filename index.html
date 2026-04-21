@@ -151,6 +151,39 @@
             margin-top: 40px; 
         }
         .ai-box h3 { margin-top: 0; color: var(--accent); font-size: 1.1rem; }
+
+        .api-config {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .api-config label { font-size: 0.75rem; color: var(--text-dim); font-weight: 600;}
+        .api-config input { 
+            padding: 10px; 
+            background: var(--input-bg); 
+            border: 1px solid var(--border); 
+            border-radius: 6px; 
+            color: #fff;
+            font-size: 0.85rem;
+        }
+
+        /* NEW PROFESSIONAL AI DISPLAY STYLING */
+        #ai-output {
+            margin-top: 15px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            white-space: pre-wrap;
+            line-height: 1.6;
+        }
+        .ai-result-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-left: 4px solid var(--accent);
+            padding: 20px;
+            border-radius: 4px 8px 8px 4px;
+            color: #e1e1e1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         
         .btn-ai { 
             background: var(--accent); 
@@ -324,8 +357,14 @@
 
     <div class="ai-box">
         <h3>Over all Comments</h3>
+        
+        <div class="api-config">
+            <label>Update Gemini API Key</label>
+            <input type="password" id="customApiKey" placeholder="Paste your new API key here...">
+        </div>
+
         <button class="btn-ai" onclick="runAISummary()">Result Analysis</button>
-        <div id="ai-output" style="margin-top:15px; font-style: normal; font-size: 0.95rem; color: var(--text-main); white-space: pre-wrap;">Awaiting data for analysis...</div>
+        <div id="ai-output">Awaiting data for analysis...</div>
     </div>
 
     <div class="signature-section">
@@ -390,7 +429,10 @@
     };
 
     async function runAISummary() {
-        const apiKey = "AIzaSyB6rnKRIIO79lDrM0fHnw5jGHub29E3RxY"; 
+        const customKey = document.getElementById('customApiKey').value.trim();
+        const defaultKey = "BSEVALUATION"; 
+        const apiKey = customKey || defaultKey;
+
         const output = document.getElementById('ai-output');
         const name = document.getElementById('empName').value || "the employee";
         const evalDate = document.getElementById('dateEvaluated').value || "unspecified date";
@@ -402,36 +444,43 @@
                               .filter(v => v !== "")
                               .join("; ");
 
-        output.innerText = "Analyzing Results...";
+        output.innerHTML = "<em>Analyzing Results...</em>";
 
         try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+            
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     contents: [{ 
                         parts: [{ 
-                            text: `Analyze the performance of ${name} evaluated on ${evalDate}. 
-                            Overall Result: ${totalScore} (${status} standing). 
-                            Evaluator comments: ${feedback || "No detailed notes provided."}. 
+                            text: `Briefly summarize the performance of ${name} evaluated on ${evalDate}. 
+                            Score: ${totalScore} (${status}). 
+                            Notes: ${feedback || "No notes provided."}. 
                             
-                            Please structure your response exactly as follows:
-                            1. STRENGTHS: (Identify 2-3 key performance highlights)
-                            2. NEEDS TO IMPROVED: (Identify 2-3 specific areas for growth)
-                            3. ACTION PLAN: (Provide a step-by-step recommendation for the next period)` 
+                            Output format:
+                            - STRENGTHS: (Bullet points)
+                            - AREAS TO IMPROVE: (Bullet points)
+                            - ACTION STEP: (One clear recommendation)` 
                         }] 
                     }]
                 })
             });
+
             const result = await response.json();
             
-            if (result.candidates && result.candidates.length > 0) {
-                output.innerText = result.candidates[0].content.parts[0].text;
+            if (result.error) {
+                output.innerText = "API Error: " + result.error.message;
+            } else if (result.candidates && result.candidates.length > 0) {
+                // Wrap response in the professional card class
+                const content = result.candidates[0].content.parts[0].text;
+                output.innerHTML = `<div class="ai-result-card">${content}</div>`;
             } else {
-                output.innerText = "Analysis failed. Please verify your API key.";
+                output.innerText = "Analysis failed. Please check your API key.";
             }
         } catch (err) {
-            output.innerText = "Error: Check your connection or API status.";
+            output.innerText = "Connection Error: Check your internet or API key status.";
         }
     }
 </script>
