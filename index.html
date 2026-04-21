@@ -38,7 +38,6 @@
 
         h1 { margin: 0 0 25px 0; color: #fff; font-weight: 300; letter-spacing: 1px; }
 
-        /* Header Info Section */
         .info-section { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
@@ -69,10 +68,8 @@
             font-family: inherit;
         }
 
-        /* Date Selection Grid */
         .date-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-        /* Section Headers */
         h2 { 
             font-size: 1rem; 
             background: #2c3e50; 
@@ -94,7 +91,6 @@
             border: 1px solid rgba(255,255,255,0.2); 
         }
 
-        /* Table Styling */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th { text-align: left; padding: 12px; background: rgba(0,0,0,0.2); font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; }
         td { padding: 15px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
@@ -125,7 +121,6 @@
             resize: vertical; 
         }
 
-        /* Performance Legend */
         .legend-bar { display: flex; gap: 10px; margin-top: 40px; }
         .legend-item { padding: 10px; border-radius: 4px; font-size: 0.75rem; color: white; font-weight: bold; flex: 1; text-align: center; }
         .l-exc { background: var(--excellent); }
@@ -133,7 +128,6 @@
         .l-ni { background: var(--ni); }
         .l-poor { background: var(--poor); }
 
-        /* Grand Total Section */
         .grand-total-card { 
             margin-top: 20px; 
             background: #1e2124; 
@@ -173,7 +167,6 @@
         }
         .btn-ai:hover { background: #2980b9; }
 
-        /* Signature Section Styling */
         .signature-section {
             margin-top: 50px;
             display: grid;
@@ -182,9 +175,7 @@
             border-top: 1px solid var(--border);
             padding-top: 30px;
         }
-        .sig-block {
-            text-align: center;
-        }
+        .sig-block { text-align: center; }
         .sig-line {
             border-bottom: 1px solid var(--text-main);
             margin-bottom: 8px;
@@ -199,12 +190,8 @@
             text-transform: uppercase;
             display: block;
         }
-        .sig-date {
-            margin-top: 15px;
-            font-size: 0.85rem;
-        }
+        .sig-date { margin-top: 15px; font-size: 0.85rem; }
 
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--primary-bg); }
         ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
@@ -246,24 +233,24 @@
         <thead><tr><th>Performance Indicator</th><th style="width:80px">Rating</th><th>Comments</th></tr></thead>
         <tbody>
             <tr>
-                <td><span class="indicator-text">Portfolio Management:</span><span class="indicator-desc">Ensures all loan folders and documentation are processed within the standard turnaround time (e.g., 72-hour rule).</span></td>
+                <td><span class="indicator-text">Portfolio Management:</span><span class="indicator-desc">Ensures all loan folders and documentation are processed within standard time (72-hour rule).</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec1" oninput="calculateScores()"></td>
-                <td><textarea class="comment-field"></textarea></td>
+                <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Workflow Discipline:</span><span class="indicator-desc">Adheres to and enforces morning routines and operational deadlines (e.g., 8:00 AM Rule).</span></td>
+                <td><span class="indicator-text">Workflow Discipline:</span><span class="indicator-desc">Adheres to and enforces operational deadlines (e.g., 8:00 AM Rule).</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec1" oninput="calculateScores()"></td>
-                <td><textarea class="comment-field"></textarea></td>
+                <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Data Integrity:</span><span class="indicator-desc">Maintains accurate and timely updates in tracking tools and MIS reports; ensures "Availed" statuses are correctly logged.</span></td>
+                <td><span class="indicator-text">Data Integrity:</span><span class="indicator-desc">Maintains accurate updates in tracking tools; ensures "Availed" statuses are correctly logged.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec1" oninput="calculateScores()"></td>
-                <td><textarea class="comment-field"></textarea></td>
+                <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Resource Management:</span><span class="indicator-desc">Effectively manages branch assets, including vehicle maintenance and office supplies.</span></td>
+                <td><span class="indicator-text">Resource Management:</span><span class="indicator-desc">Effectively manages branch assets, including vehicle maintenance and supplies.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec1" oninput="calculateScores()"></td>
-                <td><textarea class="comment-field"></textarea></td>
+                <td><textarea class="comment-input"></textarea></td>
             </tr>
         </tbody>
     </table>
@@ -273,19 +260,19 @@
         <thead><tr><th>Performance Indicator</th><th style="width:80px">Rating</th><th>Comments</th></tr></thead>
         <tbody>
             <tr>
-                <td><span class="indicator-text">Staff Mentorship:</span><span class="indicator-desc">Provides clear direction and motivation to staff, fostering a professional and productive environment.</span></td>
+                <td><span class="indicator-text">Staff Mentorship:</span><span class="indicator-desc">Provides clear direction and motivation, fostering a productive environment.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec2" oninput="calculateScores()"></td>
-                <td><textarea class="comment-field"></textarea></td>
+                <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Conflict Resolution:</span><span class="indicator-desc">Handles internal and external disputes with professionalism and follows organizational protocols.</span></td>
+                <td><span class="indicator-text">Conflict Resolution:</span><span class="indicator-desc">Handles disputes professionally and follows organizational protocols.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec2" oninput="calculateScores()"></td>
-                <td><textarea class="comment-field"></textarea></td>
+                <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Performance Tracking:</span><span class="indicator-desc">Regularly monitors individual staff KPIs (e.g., Defaults, Reloans, and New Accounts) and provides coaching where needed.</span></td>
+                <td><span class="indicator-text">Performance Tracking:</span><span class="indicator-desc">Monitors KPIs (Defaults, Reloans, etc.) and provides coaching.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec2" oninput="calculateScores()"></td>
-                <td><textarea class="comment-field"></textarea></td>
+                <td><textarea class="comment-input"></textarea></td>
             </tr>
         </tbody>
     </table>
@@ -295,19 +282,19 @@
         <thead><tr><th>Performance Indicator</th><th style="width:80px">Rating</th><th>Comments</th></tr></thead>
         <tbody>
             <tr>
-                <td><span class="indicator-text">Growth Targets:</span><span class="indicator-desc">Meets or exceeds monthly targets for new client acquisition and loan releases.</span></td>
+                <td><span class="indicator-text">Growth Targets:</span><span class="indicator-desc">Meets or exceeds monthly targets for new client acquisition and releases.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec3" oninput="calculateScores()"></td>
-                <td><textarea class="comment-field"></textarea></td>
+                <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Collections Performance:</span><span class="indicator-desc">Demonstrates effective strategies for reducing defaults and managing "Mauswagon" or reloan prospects.</span></td>
+                <td><span class="indicator-text">Collections Performance:</span><span class="indicator-desc">Effectively manages "Mauswagon" reloan prospects and reduces defaults.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec3" oninput="calculateScores()"></td>
-                <td><textarea class="comment-field"></textarea></td>
+                <td><textarea class="comment-input"></textarea></td>
             </tr>
             <tr>
-                <td><span class="indicator-text">Innovation:</span><span class="indicator-desc">Suggests or implements improvements to branch processes or automation to increase efficiency.</span></td>
+                <td><span class="indicator-text">Innovation:</span><span class="indicator-desc">Implements improvements or automation to increase efficiency.</span></td>
                 <td><input type="number" value="1" min="1" max="5" class="score sec3" oninput="calculateScores()"></td>
-                <td><textarea class="comment-field"></textarea></td>
+                <td><textarea class="comment-input"></textarea></td>
             </tr>
         </tbody>
     </table>
@@ -393,54 +380,45 @@
     };
 
     async function runAISummary() {
-        // REPLACE THE STRING BELOW WITH YOUR ACTUAL API KEY
-        const apiKey = "AIzaSyApaoy1RwaQd75JoA5GQRty3Fx_KDVYZxc"; 
+        const apiKey = "YOUR_API_KEY_HERE"; // Insert your Google AI Studio Key
         const output = document.getElementById('ai-output');
-        
         const name = document.getElementById('empName').value || "the employee";
+        const evalDate = document.getElementById('dateEvaluated').value || "unspecified date";
         const totalScore = document.getElementById('grandTotal').innerText;
         const status = document.getElementById('standing-text').innerText;
-        
-        // Collect comments from textareas to give the AI context
-        const comments = Array.from(document.querySelectorAll('.comment-field'))
-                              .map(t => t.value)
-                              .filter(v => v.trim() !== "")
-                              .join(" | ");
 
-        output.innerText = "Analyzing performance standing...";
+        // Collect specific feedback from textareas
+        const feedback = Array.from(document.querySelectorAll('.comment-input'))
+                              .map(t => t.value.trim())
+                              .filter(v => v !== "")
+                              .join("; ");
+
+        output.innerText = "Gemini 3 Flash is analyzing metrics...";
 
         try {
-            // Updated to the correct Gemini 1.5 Flash endpoint
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-            
-            const response = await fetch(url, {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash:generateContent?key=${apiKey}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    contents: [{
-                        parts: [{
-                            text: `Write a professional 3-sentence performance summary for ${name}. 
-                                   Total Score: ${totalScore}. 
-                                   Standing: ${status}. 
-                                   Context/Comments: ${comments}. 
-                                   Tone should be professional and encouraging. 
-                                   Focus on operational discipline and leadership.`
-                        }]
+                    contents: [{ 
+                        parts: [{ 
+                            text: `Analyze the performance of ${name} evaluated on ${evalDate}. 
+                            Overall Result: ${totalScore} (${status} standing). 
+                            Evaluator feedback: ${feedback || "No specific comments provided."}. 
+                            Write a concise, professional summary highlighting operational discipline and leadership growth.` 
+                        }] 
                     }]
                 })
             });
-
             const result = await response.json();
             
-            if (result.candidates && result.candidates[0].content) {
+            if (result.candidates && result.candidates.length > 0) {
                 output.innerText = result.candidates[0].content.parts[0].text;
             } else {
-                output.innerText = "The AI returned an empty response. Check your inputs.";
+                output.innerText = "Analysis failed. Please verify your API key.";
             }
-
         } catch (err) {
-            console.error(err);
-            output.innerText = "Error: Please check your API key and connection.";
+            output.innerText = "Error: Check your connection or API status.";
         }
     }
 </script>
