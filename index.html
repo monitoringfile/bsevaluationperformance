@@ -4,7 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supervisor Evaluation Portal</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { 
+            --primary: #2c3e50; --accent: #3498db; --bg: #f4f7f6; 
+            --excellent: #27ae60; --good: #2ecc71; --ni: #f39c12; --poor: #c0392b;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); padding: 20px; color: #333; }
+        .form-card { max-width: 1000px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        /* Official Header Style */
+        .info-section { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; padding: 20px; background: #fcfcfc; border: 1px solid #eee; border-radius: 8px; }
+        .info-group { display: flex; flex-direction: column; }
+        .info-group label { font-weight: 700; font-size: 0.85rem; margin-bottom: 5px; color: var(--primary); text-transform: uppercase; }
+        .info-group input { padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+
+        /* Performance Legend */
+        .legend-bar { display: flex; gap: 10px; margin-bottom: 30px; justify-content: space-between; }
+        .legend-item { padding: 12px 15px; border-radius: 6px; font-size: 0.9rem; color: white; font-weight: bold; flex: 1; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .l-exc { background: var(--excellent); }
+        .l-good { background: var(--good); }
+        .l-ni { background: var(--ni); }
+        .l-poor { background: var(--poor); }
+
+        h2 { font-size: 1.1rem; background: var(--primary); color: white; padding: 12px; border-radius: 6px; margin-top: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .section-score-pill { background: rgba(255,255,255,0.2); padding: 2px 12px; border-radius: 20px; font-size: 0.9rem; border: 1px solid white; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { text-align: left; padding: 10px; background: #f8f9fa; font-size: 0.85rem; border-bottom: 2px solid #dee2e6; }
+        td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .indicator-text { font-weight: 700; display: block; color: var(--primary); }
+        .indicator-desc { font-size: 0.8rem; color: #666; display: block; }
+        
+        input[type="number"] { width: 60px; padding: 8px; border: 2px solid #ddd; border-radius: 6px; text-align: center; font-weight: bold; }
+        textarea { width: 95%; height: 50px; border: 1px solid #ccc; border-radius: 4px; padding: 8px; font-family: inherit; resize: vertical; }
+
+        /* Grand Total Section */
+        .grand-total-card { margin-top: 20px; background: var(--primary); color: white; padding: 25px; border-radius: 8px; display: grid; grid-template-columns: 1fr 1fr 1fr; text-align: center; gap: 20px; }
+        .grand-total-card span { font-size: 1.6rem; display: block; font-weight: bold; margin-top: 5px; }
+        
+        .ai-box { background: #e8f4fd; border: 1px solid #b3d7f2; padding: 20px; border-radius: 10px; margin-top: 30px; }
+        .btn-ai { background: var(--accent); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; transition: 0.3s; }
+    </style>
 </head>
 <body>
 
@@ -110,6 +150,63 @@
     </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+    function calculateScores() {
+        const allInputs = document.querySelectorAll('.score');
+        allInputs.forEach(input => {
+            let val = parseInt(input.value);
+            if (val < 1) input.value = 1;
+            if (val > 5) input.value = 5;
+        });
+
+        const s1 = Array.from(document.querySelectorAll('.sec1')).reduce((acc, i) => acc + parseInt(i.value || 0), 0);
+        const s2 = Array.from(document.querySelectorAll('.sec2')).reduce((acc, i) => acc + parseInt(i.value || 0), 0);
+        const s3 = Array.from(document.querySelectorAll('.sec3')).reduce((acc, i) => acc + parseInt(i.value || 0), 0);
+
+        document.getElementById('pill-sec1').innerText = `${s1} / 20`;
+        document.getElementById('pill-sec2').innerText = `${s2} / 15`;
+        document.getElementById('pill-sec3').innerText = `${s3} / 15`;
+
+        const total = s1 + s2 + s3;
+        const max = 50;
+        const percent = ((total / max) * 100).toFixed(1);
+        
+        document.getElementById('grandTotal').innerText = `${total} / ${max}`;
+        document.getElementById('percentage').innerText = `${percent}%`;
+
+        const standing = document.getElementById('standing-text');
+        if (percent >= 90) { standing.innerText = "Excellent"; standing.style.color = "#27ae60"; }
+        else if (percent >= 75) { standing.innerText = "Good"; standing.style.color = "#2ecc71"; }
+        else if (percent >= 50) { standing.innerText = "Needs Improvement"; standing.style.color = "#f39c12"; }
+        else { standing.innerText = "Poor"; standing.style.color = "#e74c3c"; }
+    }
+
+    window.onload = calculateScores;
+
+    async function runAISummary() {
+        const apiKey = "AIzaSyAB53oOLC6Rn_4Gid2Ub6xLc8_p1H4ATWc";
+        const output = document.getElementById('ai-output');
+        const name = document.getElementById('empName').value || "the employee";
+        const totalScore = document.getElementById('grandTotal').innerText;
+        const status = document.getElementById('standing-text').innerText;
+
+        output.innerText = "Analyzing performance standing and metrics...";
+
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: `Summarize the performance of ${name}. Overall Score: ${totalScore}. Standing: ${status}. Focus on operational discipline, leadership ability, and growth impact.` }] }]
+                })
+            });
+            const result = await response.json();
+            output.innerText = result.candidates[0].content.parts[0].text;
+        } catch (err) {
+            output.innerText = "Error: Check your API key or internet connection.";
+        }
+    }
+</script>
+
 </body>
 </html>
